@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +23,12 @@ public class Categoria implements Serializable {
 	
 	/*
 	 * declarando e instanciando uma coleção de produtos
+	 * @ManyToMany(mappedBy="categorias") -> indica que a coleção e relacionamento já foi mapeado na List categorias (classe Produto)
+	 * @JsonManagedReference  -> usado para resolver referência cíclica, é inserido no "lado" em que você quer que venham as informações ( 1 categoria E n produtos)
+	 *                           então é no lado dos produtos que deve ficar essa anotação.
+	 *                           No "lado oposto", colocar a notação @JsonBackReference (lado oposto é a list categorias na classe Produto)
 	 */
+	@JsonManagedReference
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	

@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*
  * Mapeando a entidade para o JPA
  * Utilizar sempre o javax.persistence.Entity (que é a Interface)
@@ -39,8 +42,10 @@ public class Produto implements Serializable {
 	 * --------
 	 *  Basta fazer o mapeamento (MxM) de um lado do relacionamento,
 	 *  no outro lado, basta referencia-lo com @ManyToMany(mappedBy="categorias")
-	 *
+	 *  
+	 *  @JsonBackReference   -> indica que um produto não terá uma coleção de categorias (veja a implementação de @JsonManagedReference na classe Categoria)
 	 */
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name="PRODUTO_CATEGORIA",
 		joinColumns= @JoinColumn(name="produto_id"),
